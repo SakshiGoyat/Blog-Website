@@ -1,0 +1,54 @@
+.container-fluid {
+  padding-top: 70px;
+  padding-bottom: 70px;
+}
+.navbar {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border: 0;
+  border-radius: 0;
+  margin-bottom: 0;
+  font-size: 1.5rem;
+  letter-spacing: 5px;
+}
+.navbar-nav li a:hover {
+  color: #0a0b0b !important;
+}
+
+.navbar-brand.heading{
+  font-size: 4.5rem;
+  font-family: 'Lobster', cursive;;
+}
+.footer-padding {
+  padding-bottom: 60px;
+}
+
+.footer {
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #4f5453;
+}
+
+.footer p {
+  margin-top: 25px;
+  font-size: 1.6rem;
+  color: #fff;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.compose {
+  margin: 10rem;
+}
+
+.homePage {
+  margin: 5rem;
+}
+
+.homePage.para {
+  height: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

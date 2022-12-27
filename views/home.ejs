@@ -1,0 +1,20 @@
+<%- include('partials/header'); -%>
+
+<div class="homePage">
+  <h1>Home</h1>
+  <p><%= homeContent %></p>
+</div>
+
+<% postTitle.forEach((item) =>{ %>
+<div class="homePage">
+  <h2><%= item.title %></h2>
+  <% var value = item.content;%> <% if(item.content.length > 100){ %> <% value =
+  item.content.substring(0,100) + "..." %>
+  <p class="para" style="display: inline"><%= value %></p>
+  <a href="post/<%= item.title %>">Read more</a>
+  <% }else{ %>
+  <p class="para"><%= value %></p>
+  <% } %>
+</div>
+
+<% }) %> <%- include('partials/footer'); -%>
