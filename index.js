@@ -2,6 +2,16 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const _ = require("lodash");
+const mongoose = require("mongoose");
+mongoose.set("strictQuery", true);
+mongoose.connect("mongodb://localhost:27017/blogDB");
+
+const newSchema = new mongoose.Schema({
+  title: String,
+  content: String,
+});
+
+const blog = mongoose.model("blog", newSchema);
 
 const port = process.env.PORT || 5000;
 const app = express();
@@ -18,20 +28,30 @@ const aboutStartingContent =
 const contactStartingContent =
   "Scelerisque eleifend donec pretium vulputate sapien. Rhoncus urna neque viverra justo nec ultrices. Arcu dui vivamus arcu felis bibendum. Consectetur adipiscing elit duis tristique. Risus viverra adipiscing at in tellus integer feugiat. Sapien nec sagittis aliquam malesuada bibendum arcu vitae. Consequat interdum varius sit amet mattis. Iaculis nunc sed augue lacus. Interdum posuere lorem ipsum dolor sit amet consectetur adipiscing elit. Pulvinar elementum integer enim neque. Ultrices gravida dictum fusce ut placerat orci nulla. Mauris in aliquam sem fringilla ut morbi tincidunt. Tortor posuere ac ut consequat semper viverra nam libero.";
 
-const posts = [];
-
 app.get("/", (reqHome, resHome) => {
-  resHome.render("home", {
-    homeContent: homeStartingContent,
-    postTitle: posts,
+  blog.find({}, (err, foundblog) => {
+    if (err) {
+      console.log(err);
+    } else {
+      resHome.render("home", {
+        homeContent: homeStartingContent,
+        postTitle: foundblog,
+      });
+    }
   });
 });
 
 app.get("/post/:topic", (reqPost, resPost) => {
   var path = _.lowerCase(reqPost.params.topic);
-  posts.forEach((item) => {
-    if (_.lowerCase(item.title) === path) {
-      resPost.render("post", { title: item.title, content: item.content });
+  blog.find({}, (err, foundblog) => {
+    if (err) {
+      console.log(err);
+    } else {
+      foundblog.forEach((item) => {
+        if (_.lowerCase(item.title) === path) {
+          resPost.render("post", { title: item.title, content: item.content });
+        }
+      });
     }
   });
 });
@@ -48,11 +68,11 @@ app.get("/compose", (reqCompose, resCompose) => {
 });
 
 app.post("/compose", (reqCp, resCp) => {
-  const obj = {
+  const blog1 = new blog({
     title: reqCp.body.postTitle,
     content: reqCp.body.postContent,
-  };
-  posts.push(obj);
+  });
+  blog1.save();
   resCp.redirect("/");
 });
 app.listen(port, () => {

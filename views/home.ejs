@@ -11,7 +11,7 @@
   <% var value = item.content;%> <% if(item.content.length > 100){ %> <% value =
   item.content.substring(0,100) + "..." %>
   <p class="para" style="display: inline"><%= value %></p>
-  <a href="post/<%= item.title %>">Read more</a>
+  <a href="post/<%= item.title %>" target="_blank">Read more</a>
   <% }else{ %>
   <p class="para"><%= value %></p>
   <% } %>
